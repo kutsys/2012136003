@@ -55,7 +55,7 @@ int main(){
 
 	srand(time(NULL));
 
-	printf("2011136015 김상균\n");
+	printf("2012136003 KANG MALGEUN\n");
 	
 	for(i=0;i<NUM_OF_THREAD;i++){
 		res = pthread_create(&tid[i], NULL, subproc, &count[i]);
