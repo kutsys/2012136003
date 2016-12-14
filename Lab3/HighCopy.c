@@ -1,33 +1,32 @@
-#include <unistd.h>
+
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <time.h>
 
-int main(int argc, char *argv[]) {
+int main(void){
 	char block[1024];
-	int nread;
-	FILE *in, *out;
-
-	if(argc != 3) {
-		printf("Error! Please write right name.\n");
-		exit(1);
-	}
-
-	if((in = fopen(argv[1], "r")) == NULL) {
-		printf("Not Found!\n");
-		exit(1);
-	}
-	
-	out = fopen(argv[2], "w");
-
-	while(fgets(block, 1024, in) != NULL) {
-		fputs(block, out);
-		printf("*");
-	}
-
-	fclose(in);
-	fclose(out);
-	printf("\n~Finished~\n");
-	return 0;
+  int nread;
+  FILE *in, *out;
+    
+  if((in = fopen("source.txt", "r")) == NULL) {
+    fprintf(stderr, "error : input file open error\n");
+    exit(1);
+  }
+  
+  if((out = fopen("copy.txt", "w")) == NULL) {
+    fprintf(stderr, "error : output file open error\n");
+    exit(1);
+  }
+  
+  while((nread = fread(block, sizeof(char), sizeof(block), in)) > 0){
+    fwrite(block, sizeof(char), nread, out);
+    sleep(1);
+    printf(".");
+  }
+  printf("\n");
+  fclose(in);
+  fclose(out);
 }
